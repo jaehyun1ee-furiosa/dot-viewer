@@ -23,6 +23,19 @@ jobs:
       run: |
         rustup update
         rustup component add clippy
+        
+    - name: Setup cache
+      uses: actions/cache@v3
+      continue-on-error: false
+      with:
+        path: |
+          ~/.cargo/bin/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          target/
+        key: ${{ runner.os }}-cargo-${{ hasFiles('**/Cargo.lock') }}
+        restore-keys: ${{ runner.os }}-cargo-
     
     - name: Install graphviz-dev
       run: sudo apt-get install -y graphviz-dev
