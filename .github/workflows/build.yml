@@ -10,8 +10,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
-
+  build-ubuntu:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,6 +21,21 @@ jobs:
     
     - name: Install graphviz-dev
       run: sudo apt-get install -y graphviz-dev
+      
+    - name: Build
+      run: cargo build --verbose
+      
+  build-macos:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+        token: ${{ secrets.ACTION_TOKEN }}
+    
+    - name: Install graphviz
+      run: brew install graphviz
       
     - name: Build
       run: cargo build --verbose
