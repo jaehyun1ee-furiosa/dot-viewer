@@ -16,12 +16,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    
-    - name: Add SSH private keys for submodules
-      uses: webfactory/ssh-agent@v0.7.0
       with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-    - run: git submodule update --init --recursive
+        submodules: recursive
+        token: ${{ secrets.ACTION_TOKEN }}
     
     - name: Install graphviz-dev
       run: sudo apt-get install -y graphviz-dev
