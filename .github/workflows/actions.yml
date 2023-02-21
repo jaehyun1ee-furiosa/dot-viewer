@@ -10,7 +10,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build-ubuntu:
+  build-lint-ubuntu:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,12 +18,25 @@ jobs:
       with:
         submodules: recursive
         token: ${{ secrets.ACTION_TOKEN }}
+        
+    - name: Update toolchain
+      run: |
+        rustup update
+        rustup component add clippy
     
     - name: Install graphviz-dev
       run: sudo apt-get install -y graphviz-dev
       
     - name: Build
-      run: cargo build --verbose
+      run: |
+        cd dot-viewer
+        cargo build --verbose
+        
+    - name: Lint
+      run: |
+        cd dot-viewer
+        cargo fmt -- --check
+        cargo clippy -- -D warnings
       
   build-macos:
     runs-on: macos-latest
