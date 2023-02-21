@@ -16,6 +16,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with: 
+         submodules: recursive
     - name: Install graphviz-dev
       run: sudo apt-get install -y graphviz-dev
     - name: Build
