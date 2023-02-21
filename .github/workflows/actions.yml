@@ -28,13 +28,10 @@ jobs:
       run: sudo apt-get install -y graphviz-dev
       
     - name: Build
-      run: |
-        cd dot-viewer
-        cargo build --verbose
+      run: cargo build --verbose
         
     - name: Lint
       run: |
-        cd dot-viewer
         cargo fmt -- --check
         cargo clippy -- -D warnings
       
